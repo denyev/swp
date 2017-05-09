@@ -7,8 +7,8 @@ mkdir -vp $HOME/web/{public,public/{img,css,js},uploads,etc} && \
 cat > $HOME/web/etc/nginx.conf <<_EOF
 # http://eax.me/nginx/
 server {
-  listen 80 *;
-  listen [::]:80 * ipv6only=on;
+  listen 80 default_server;
+  listen [::]:80 default_server ipv6only=on;
   limit_rate 512k;
   server_tokens off;
   error_page 404 https://stepik.org/somepage;
@@ -17,7 +17,7 @@ server {
   index index.html index.htm;
 
   # Make site accessible from http://localhost/
-  server_name *;
+  server_name default_server;
   
   location ~* ^.+\.\w{3,4}$  {
     # https://regex101.com/r/4sXIve/1
