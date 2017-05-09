@@ -22,7 +22,7 @@ server {
   listen [::]:80 default_server ipv6only=on;
   limit_rate 512k;
   server_tokens off;
-  access_log   ${HOME}/web/logs/nginx.access_loggit ;
+  access_log   ${HOME}/web/logs/nginx.access_log;
   error_log  ${HOME}/web/logs/nginx.error_log  debug;  
 
   root ${HOME}/web/public;
