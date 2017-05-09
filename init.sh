@@ -40,5 +40,12 @@ server {
   }
 }
 _EOF
-sudo ln -sv $HOME/web/etc/nginx.conf /etc/nginx/sites-enabled/test.conf && \
+
+NGINX_CONF="/etc/nginx/sites-enabled/test.conf"
+
+if [ ! -f NGINX_CONF ]; then
+    sudo ln -sv $HOME/web/etc/nginx.conf /NGINX_CONF
+fi
+
+
 sudo /etc/init.d/nginx start
