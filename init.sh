@@ -3,27 +3,27 @@
 which nginx
 INSTALLED=$?
 
-if [[ $INSTALLED != 0 ]]; then
+if [[ ${INSTALLED} != 0 ]]; then
     sudo apt update && \
     sudo apt install nginx
 fi
 
 DEFAULT_NGINX_CONF="/etc/nginx/sites-enabled/default"
 
-if [ -f $DEFAULT_NGINX_CONF ]; then
+if [ -f ${DEFAULT_NGINX_CONF} ]; then
     sudo rm -iv /etc/nginx/sites-enabled/default 
 fi
 
-mkdir -vp $HOME/web/{logs,public,public/{img,css,js},uploads,etc} && \
-cat > $HOME/web/etc/nginx.conf <<_EOF
+mkdir -vp ${HOME}/web/{logs,public,public/{img,css,js},uploads,etc} && \
+cat > ${HOME}/web/etc/nginx.conf <<_EOF
 # http://eax.me/nginx/
 server {
   listen 80 default_server;
   listen [::]:80 default_server ipv6only=on;
   limit_rate 512k;
   server_tokens off;
-  access_log   /home/box/web/logs/nginx.access_log;
-  error_log  /home/box/web/logs/nginx.error_log  debug;  
+  access_log   ${HOME}/web/logs/nginx.access_loggit ;
+  error_log  ${HOME}/web/logs/nginx.error_log  debug;  
 
   root /home/box/web/public;
   index index.html index.htm;
@@ -48,8 +48,8 @@ _EOF
 
 NGINX_CONF="/etc/nginx/sites-enabled/test.conf"
 
-if [ ! -f $NGINX_CONF ]; then
-    sudo ln -sv $HOME/web/etc/nginx.conf $NGINX_CONF
+if [ ! -f ${NGINX_CONF} ]; then
+    sudo ln -sv ${HOME}/web/etc/nginx.conf ${NGINX_CONF}
 fi
 
 
