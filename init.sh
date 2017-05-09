@@ -98,4 +98,6 @@ cat > ${HOME}/etc/hello.py <<_EOF
 
 _EOF
 
+sudo mkdir -vp "/etc/gunicorn.d"
+
 create_conf "web/etc/hello.py" "/etc/gunicorn.d/hello.py"
