@@ -1,8 +1,14 @@
 #! /usr/bin/env bash
 
-sudo apt update && \
-sudo apt install nginx && \
-sudo rm -v /etc/nginx/sites-enabled/default && \
+which nginx
+INSTALLED=$?
+
+if [[ $INSTALLED != 0 ]]; then
+    sudo apt update && \
+    sudo apt install nginx
+fi
+
+sudo rm -iv /etc/nginx/sites-enabled/default && \
 mkdir -vp $HOME/web/{logs,public,public/{img,css,js},uploads,etc} && \
 cat > $HOME/web/etc/nginx.conf <<_EOF
 # http://eax.me/nginx/
