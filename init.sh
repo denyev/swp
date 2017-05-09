@@ -1,12 +1,29 @@
 #! /usr/bin/env bash
 
-which nginx
-INSTALLED=$?
+mkdir -vp ${HOME}/web/{logs,public,public/{img,css,js},uploads,etc} 
 
-if [[ ${INSTALLED} != 0 ]]; then
-    sudo apt update && \
-    sudo apt install nginx
-fi
+check_install() {
+    which ${1}
+    INSTALLED=$?
+
+    if [[ ${INSTALLED} != 0 ]]; then
+        sudo apt update && \
+        sudo apt install ${1}
+    fi
+}
+
+create_conf() {
+    CONF_LOCAL_FILE=${1}
+    CONF_FILE=${2}
+
+    if [ ! -f ${CONF_FILE} ]; then
+        sudo ln -sv ${HOME}/${CONF_LOCAL_FILE} ${CONF_FILE}
+    fi
+}
+
+# config nginx
+
+check_install nginx
 
 DEFAULT_NGINX_CONF="/etc/nginx/sites-enabled/default"
 
@@ -14,7 +31,6 @@ if [ -f ${DEFAULT_NGINX_CONF} ]; then
     sudo rm -iv /etc/nginx/sites-enabled/default 
 fi
 
-mkdir -vp ${HOME}/web/{logs,public,public/{img,css,js},uploads,etc} && \
 cat > ${HOME}/web/etc/nginx.conf <<_EOF
 # http://eax.me/nginx/
 server {
@@ -46,11 +62,11 @@ server {
 }
 _EOF
 
-NGINX_CONF="/etc/nginx/sites-enabled/test.conf"
-
-if [ ! -f ${NGINX_CONF} ]; then
-    sudo ln -sv ${HOME}/web/etc/nginx.conf ${NGINX_CONF}
-fi
-
+create_conf "web/etc/nginx.conf" "/etc/nginx/sites-enabled/test.conf"
 
 sudo /etc/init.d/nginx start
+
+# config gunicorn
+
+check_install gunicorn
+
