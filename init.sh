@@ -8,7 +8,12 @@ if [[ $INSTALLED != 0 ]]; then
     sudo apt install nginx
 fi
 
-sudo rm -iv /etc/nginx/sites-enabled/default && \
+DEFAULT_NGINX_CONF="/etc/nginx/sites-enabled/default"
+
+if [ -f $DEFAULT_NGINX_CONF ]; then
+    sudo rm -iv /etc/nginx/sites-enabled/default 
+fi
+
 mkdir -vp $HOME/web/{logs,public,public/{img,css,js},uploads,etc} && \
 cat > $HOME/web/etc/nginx.conf <<_EOF
 # http://eax.me/nginx/
