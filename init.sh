@@ -22,7 +22,7 @@ server {
   listen [::]:80 default_server ipv6only=on;
   limit_rate 512k;
   server_tokens off;
-  access_log   /home/box/web/logs/nginx.access_log  main;
+  access_log   /home/box/web/logs/nginx.access_log;
   error_log  /home/box/web/logs/nginx.error_log  debug;  
 
   root /home/box/web/public;
