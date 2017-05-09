@@ -25,7 +25,7 @@ server {
   access_log   ${HOME}/web/logs/nginx.access_loggit ;
   error_log  ${HOME}/web/logs/nginx.error_log  debug;  
 
-  root /home/box/web/public;
+  root ${HOME}/web/public;
   index index.html index.htm;
 
   # Make site accessible from http://localhost/
@@ -33,11 +33,11 @@ server {
   
   location ~* ^.+\.\w+$  {
     # https://regex101.com/r/4sXIve/1
-    root /home/box/web/public;
+    root ${HOME}/web/public;
   }
   
   location ^~ /uploads/ {
-    root /home/box/web/;
+    root ${HOME}/web/;
   }
   
   location /+  {
